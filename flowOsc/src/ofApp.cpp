@@ -8,7 +8,7 @@ using namespace cv;
 void ofApp::setup() {
     ofBackground(0);
 	camera.setDeviceID(0);
-	camera.setup(320, 240);
+	camera.initGrabber(320, 240);
 	
     gui.setup();
     
@@ -63,7 +63,7 @@ void ofApp::update(){
 		if (usefb) {
 			flowPower = 0;
 			int count = 0;
-			auto motion = fb.getAverageFlow();
+			ofVec2f motion = fb.getAverageFlow();
 			flowPower = motion.length();
 
 		}
@@ -71,7 +71,7 @@ void ofApp::update(){
 			flowPower = 0;
 			int count = 0;
 			for (int i = 0; i < lk.getMotion().size(); i++) {
-				auto m = lk.getMotion().at(i);
+				ofVec2f m = lk.getMotion().at(i);
 				float mm = m.length();
 				if (0 < mm && mm < 200) {
 					count++;
@@ -96,5 +96,5 @@ void ofApp::draw(){
     ofDrawBitmapStringHighlight(ofToString((int) ofGetFrameRate()) + "fps", 10, 20);
     ofPopMatrix();
     gui.draw();
-	ofDrawRectangle(0, ofGetHeight() - 200, ofMap(playBack, 0, playBack.getMax(), 0, ofGetWidth()), 200);
+	ofRect(0, ofGetHeight() - 200, ofMap(playBack, 0, playBack.getMax(), 0, ofGetWidth()), 200);
 }
