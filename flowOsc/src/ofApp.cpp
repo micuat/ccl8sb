@@ -7,7 +7,10 @@ using namespace cv;
 
 void ofApp::setup() {
     ofBackground(0);
-	camera.setDeviceID(0);
+    ofBuffer buffer = ofBufferFromFile("camera.txt");
+    cout << buffer.getText();
+
+	camera.setDeviceID(ofToInt(buffer.getText()));
 	camera.initGrabber(320, 240);
 	
     gui.setup();
@@ -17,7 +20,7 @@ void ofApp::setup() {
     gui.add(lkQualityLevel.set("lkQualityLevel", 0.01, 0.001, .02));
     gui.add(lkMinDistance.set("lkMinDistance", 4, 1, 16));
     gui.add(lkWinSize.set("lkWinSize", 8, 4, 64));
-    gui.add(usefb.set("Use Farneback", false));
+    gui.add(usefb.set("Use Farneback", true));
 	gui.add(fbPyrScale.set("fbPyrScale", .5, 0, .99));
 	gui.add(fbLevels.set("fbLevels", 4, 1, 8));
     gui.add(fbIterations.set("fbIterations", 2, 1, 8));
@@ -25,7 +28,7 @@ void ofApp::setup() {
     gui.add(fbPolySigma.set("fbPolySigma", 1.5, 1.1, 2));
     gui.add(fbUseGaussian.set("fbUseGaussian", false));
     gui.add(fbWinSize.set("winSize", 32, 4, 64));
-	gui.add(flowPower.set("FlowPower", 0., 0., 100.));
+	gui.add(flowPower.set("FlowPower", 0.0218247, 0., 100.));
 	gui.add(playBack.set("PlayBack", 0., 0., 1000.));
 	gui.add(filter.set("filter", 0.1, 0., 1.));
 
@@ -95,6 +98,6 @@ void ofApp::draw(){
     curFlow->draw(0,0,640,480);
     ofDrawBitmapStringHighlight(ofToString((int) ofGetFrameRate()) + "fps", 10, 20);
     ofPopMatrix();
-    gui.draw();
+    //gui.draw();
 	ofRect(0, ofGetHeight() - 200, ofMap(playBack, 0, playBack.getMax(), 0, ofGetWidth()), 200);
 }
