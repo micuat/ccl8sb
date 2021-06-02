@@ -6,6 +6,7 @@ using namespace ofxCv;
 using namespace cv;
 
 void ofApp::setup() {
+	ofSetFrameRate(10);
     ofBackground(0);
     ofBuffer buffer = ofBufferFromFile("camera.txt");
     cout << buffer.getText();
